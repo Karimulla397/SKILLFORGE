@@ -1,0 +1,283 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  --color-text: #e7eef9;
+  --color-muted: #9fb3d6;
+  --bg-start: #050812; /* very dark navy */
+  --bg-end: #081627;   /* deep blue gradient */
+  --accent: #5ea0ff;   /* softened bright blue for accents */
+  --panel-bg: rgba(10,14,22,0.56);
+  --panel-border: rgba(255,255,255,0.04);
+}
+
+/* Ensure the dark 'coding' background applies at the highest root levels
+   Use fixed attachment and explicit rules so layout wrappers can't hide it. */
+html, #root {
+  background-color: var(--bg-start) !important;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(ellipse at 10% 10%, rgba(94,160,255,0.04), transparent 20%),
+    radial-gradient(ellipse at 90% 80%, rgba(27,60,174,0.04), transparent 18%),
+    linear-gradient(135deg, rgba(8,22,39,0.65), rgba(5,8,18,0.65));
+  background-size: 20px 20px, 40% 60%, 35% 50%, cover;
+  background-blend-mode: overlay;
+  background-attachment: fixed;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--color-text);
+  background-color: var(--bg-start);
+  /* layered background to give a 'coding' vibe: subtle grid + soft gradients */
+  background-image:
+    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(ellipse at 10% 10%, rgba(94,160,255,0.03), transparent 20%),
+    radial-gradient(ellipse at 90% 80%, rgba(27,60,174,0.03), transparent 18%),
+    linear-gradient(135deg, rgba(8,22,39,0.6), rgba(5,8,18,0.6));
+  background-size: 20px 20px, 40% 60%, 35% 50%, cover;
+  background-blend-mode: overlay;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.glass-panel {
+  /* keep content cards light to contrast with dark background */
+  @apply bg-white/80 backdrop-blur-lg shadow-lg border border-slate-100 rounded-2xl;
+  color: #0f172a;
+}
+
+/* Dark glass panel for headers, sidebars and dashboards */
+.glass-dark {
+  background-color: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-text);
+  border-radius: 12px;
+}
+
+/* Section card styling to ensure controls are visible on dark page */
+.section-card {
+  background-color: rgba(255,255,255,0.04);
+  border: 1px solid rgba(148,163,184,0.06);
+  border-radius: .5rem;
+  padding: .75rem;
+  color: var(--color-text);
+}
+
+.section-card .text-slate-900 { color: var(--color-text); }
+.section-card .text-slate-500 { color: rgba(230,238,248,0.75); }
+
+/* Expand/Delete actions styling */
+.section-actions .btn-expand,
+.section-actions button {
+  @apply text-xs font-semibold px-2 py-1 rounded-md;
+  color: var(--accent);
+  background: transparent;
+}
+
+.section-actions .btn-expand:hover {
+  background: rgba(94,160,255,0.08);
+  transform: translateY(-2px);
+}
+
+.section-actions .btn-delete {
+  color: #ff6b6b;
+  background: transparent;
+}
+
+/* Ensure global buttons have hover color change and clear visibility */
+button, .btn, .btn-primary, .brand-gradient, .bg-brand-500 {
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, color .12s ease;
+}
+
+button:hover, .btn:hover, .btn-primary:hover, .brand-gradient:hover, .bg-brand-500:hover {
+  filter: brightness(1.06);
+  transform: translateY(-3px);
+}
+
+/* Make sure text on these small action buttons is visible */
+.btn-expand { color: var(--accent); }
+.btn-delete { color: #ff6b6b; }
+
+
+.brand-gradient {
+  background: linear-gradient(135deg, #5ea0ff 0%, #1b3cae 100%);
+}
+
+/* Button utilities (non-functional styling only) */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-transform duration-150 ease-in-out;
+}
+
+.btn-primary {
+  @apply bg-brand-500 text-white shadow-md;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 25px rgba(94,160,255,0.18);
+}
+
+.btn-primary:active {
+  transform: translateY(0px) scale(0.995);
+  box-shadow: 0 6px 12px rgba(94,160,255,0.14);
+}
+
+.btn-ghost {
+  @apply text-brand-500 bg-transparent border border-transparent;
+}
+
+/* also style native buttons so existing components get the effect without code changes */
+button, input[type="button"], input[type="submit"] {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  box-shadow: 0 6px 14px rgba(5,8,18,0.28);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(94,160,255,0.18);
+}
+
+button:active, input[type="button"]:active, input[type="submit"]:active {
+  transform: translateY(0) scale(0.995);
+  box-shadow: 0 6px 12px rgba(94,160,255,0.12);
+}
+
+/* subtle animated glow to suggest live coding */
+.code-vibe-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(90deg, rgba(94,160,255,0.02), rgba(255,255,255,0.00));
+  mix-blend-mode: overlay;
+  animation: vibeShift 12s linear infinite;
+}
+
+/* Make page content render above the animated background layer */
+#root > *,
+main,
+body > div,
+.app, /* fallback class if added later */
+.glass-panel,
+.min-h-screen {
+  position: relative;
+  z-index: 10;
+}
+
+@keyframes vibeShift {
+  0% { transform: translateX(-10%); opacity: 0.9 }
+  50% { transform: translateX(10%); opacity: 1 }
+  100% { transform: translateX(-10%); opacity: 0.9 }
+}
+
+/* Improve global typography readability */
+body {
+  color: var(--color-text);
+  font-feature-settings: "tnum" on;
+}
+
+/* Don't force a single color on all form controls and buttons — allow
+   utility classes and component rules to decide specific colors. Keep
+   controls inheriting color so components can opt into dark/light text. */
+button, input, select, textarea {
+  color: inherit;
+}
+
+/* Nav/link color helpers for dark panels */
+.nav-link-dark { color: rgba(230,238,249,0.92); }
+.nav-link-muted { color: rgba(230,238,249,0.68); }
+.nav-active { background: rgba(94,160,255,0.12); color: var(--accent); }
+
+/* small helper for muted text on dark background */
+.muted { color: var(--color-muted); }
+
+/* Make `.text-slate-900` context-aware: light inside cards, bright inside dark panels */
+.glass-panel .text-slate-900 { color: #0f172a !important; }
+
+/* Ensure readable text inside dark panels (sidebar/header/other dark containers) */
+.glass-dark .text-slate-600,
+.glass-dark .text-slate-500,
+.glass-dark .text-slate-700,
+.glass-dark .text-slate-900,
+.glass-dark p,
+.glass-dark span,
+.glass-dark label,
+.glass-dark a {
+  color: rgba(231,238,249,0.92) !important;
+}
+
+/* Keep lighter helper text slightly muted but legible on dark panels */
+.glass-dark .text-xs,
+.glass-dark .text-sm,
+.glass-dark .muted {
+  color: rgba(231,238,249,0.72) !important;
+}
+
+/* Ensure `.glass-panel` (light cards) retain dark readable text */
+.glass-panel .text-slate-500,
+.glass-panel .text-slate-600 {
+  color: rgba(15,23,42,0.72) !important;
+}
+
+/* Stronger rules to guarantee legibility in light panels: any heading or
+   accidentally white text inside a white/light card should render dark. */
+.glass-panel,
+.glass-panel p,
+.glass-panel span,
+.glass-panel label,
+.glass-panel a {
+  color: #0f172a !important;
+}
+.glass-panel h1,
+.glass-panel h2,
+.glass-panel h3,
+.glass-panel h4,
+.glass-panel h5,
+.glass-panel h6 {
+  color: #0f172a !important;
+  font-weight: 600;
+}
+.glass-panel p.text-white,
+.glass-panel span.text-white,
+.glass-panel label.text-white,
+.glass-panel div.text-white {
+  color: #0f172a !important;
+}
+
+/* Emphasize big text in dark panels (sidebar/header). Make left-side
+   large content bold and bright so it doesn't blend into the background. */
+.glass-dark h1,
+.glass-dark h2,
+.glass-dark h3,
+.glass-dark .text-2xl,
+.glass-dark .text-xl,
+.glass-dark .nav-link-dark {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* Muted helpers inside dark panels should still be legible but lighter. */
+.glass-dark .muted,
+.glass-dark .text-sm,
+.glass-dark .text-xs {
+  color: rgba(231,238,249,0.72) !important;
+}
+
+
